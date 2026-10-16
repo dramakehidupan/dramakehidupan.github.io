@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Drama Kehidupan</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            'sans': ['Inter', 'system-ui', 'sans-serif'],
+          },
+          animation: {
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    
+    body {
+      scroll-behavior: smooth;
+      background: #fafafc;
+    }
+    
+    
+    .video-container {
+      position: relative;
+      width: 100%;
+      background: #000;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.3);
+    }
+    
+    
+    .video-aspect {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%; 
+      background: #000;
+    }
+    
+    
+    .video-aspect video,
+    .video-aspect iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #000;
+    }
+    
+    
+    .gate-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(12px);
+      z-index: 20;
+      border-radius: 24px;
+    }
+    
+    
+    .gate-content {
+      max-width: 90%;
+      width: 400px;
+      padding: 2rem 1.5rem;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(16px);
+      border-radius: 32px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      text-align: center;
+      margin: 1rem;
+    }
+    
+    
+    @media (max-width: 640px) {
+      .gate-content {
+        padding: 1.5rem 1rem;
+        width: 85%;
+      }
+      .gate-content h3 {
+        font-size: 1.25rem;
+      }
+      .video-container {
+        border-radius: 16px;
+      }
+    }
+    
+    
+    .btn-watch {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      background: white;
+      color: #111;
+      font-weight: 700;
+      padding: 0.875rem 1.75rem;
+      border-radius: 60px;
+      transition: all 0.2s ease;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 260px;
+    }
+    
+    .btn-watch:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      background: #f5f5f5;
+    }
+    
+    .btn-watch:active {
+      transform: translateY(1px);
+    }
+    
+    
+    .lock-badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      padding: 6px 14px;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      color: white;
+      z-index: 25;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      pointer-events: none;
+    }
+    
+    
+    video::-webkit-media-controls {
+      z-index: 30;
+    }
+    
+    
+    @media (max-width: 768px) {
+      .btn-watch {
+        padding: 0.7rem 1.25rem;
+        font-size: 0.9rem;
+        max-width: 220px;
+      }
+      .gate-content {
+        padding: 1.25rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body class="font-sans antialiased bg-gradient-to-b from-white to-gray-50 min-h-screen flex flex-col">
+
+  <!-- Header Premium -->
+  <header class="sticky top-0 z-50 bg-white/85 backdrop-blur-md border-b border-gray-100/80 shadow-sm">
+    <div class="max-w-7xl mx-auto px-5 md:px-8 lg:px-10">
+      <div class="flex flex-wrap items-center justify-between py-3 md:py-3.5 gap-3">
+        <div class="flex items-center gap-5 flex-wrap">
+          <a href="https://zombiesinmyblog.blogspot.com/" class="text-2xl md:text-3xl font-extrabold tracking-tight bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">videy</a>
+          <div class="flex gap-2.5">
+            <a href="https://zombiesinmyblog.blogspot.com/" class="inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-800 hover:bg-gray-900 hover:text-white transition-all duration-200">
+              <i class="fas fa-upload text-xs"></i> Upload
+            </a>
+            <a href="https://zombiesinmyblog.blogspot.com/" target="_blank" rel="noopener nofollow" class="inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-800 hover:bg-gray-900 hover:text-white transition-all duration-200">
+              <i class="fab fa-telegram-plane text-xs"></i> Join Sosmed
+            </a>
+          </div>
+        </div>
+        <nav>
+          <a href="https://zombiesinmyblog.blogspot.com/" class="flex items-center gap-1.5 text-sm font-medium text-gray-500 hover:text-black transition px-3 py-1.5 rounded-full hover:bg-gray-50">
+            <i class="fas fa-chart-line text-xs"></i> Advertise
+          </a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-1">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6 md:py-10 lg:py-12">
+      <!-- Breadcrumb -->
+      <div class="flex items-center gap-2 text-xs text-gray-400 mb-4">
+        <a href="https://zombiesinmyblog.blogspot.com/" class="hover:text-gray-700"><i class="fas fa-home"></i> Beranda</a>
+        <i class="fas fa-chevron-right text-[10px]"></i>
+        <span class="text-gray-600 font-medium">Menonton</span>
+      </div>
+
+      <!-- Judul & Info -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-3 mb-5">
+        <div>
+          <h1 class="text-2xl md:text-3xl font-bold tracking-tight text-gray-900 flex items-center gap-2">
+            <i class="fas fa-play-circle text-gray-700 text-2xl"></i> 
+            Video Player
+          </h1>
+          <p class="text-gray-500 text-sm mt-1">Streaming kualitas HD • Pengalaman menonton terbaik</p>
+        </div>
+        <div class="flex items-center gap-2 text-sm bg-gray-100/80 px-3 py-1.5 rounded-full">
+          <i class="fas fa-eye text-gray-500"></i>
+          <span class="text-gray-700 font-medium">1.2K menonton</span>
+          <span class="w-1 h-1 bg-gray-400 rounded-full mx-1"></span>
+          <i class="far fa-clock text-gray-500"></i>
+          <span class="text-gray-600">HD • 04:32</span>
+        </div>
+      </div>
+
+
+      <div class="video-container">
+        <div class="video-aspect">
+          <!-- Video element -->
+          <video id="player" 
+                 src="https://cdn.videystream.xyz/vira%20lina/vira%20lina-0uy.mp4" 
+                 poster="https://cdn.videystream.xyz/vira%20lina/WhatsApp%20Image%202025-09-28%20at%2013.41.00_3a91c57b.jpg" 
+                 controls 
+                 playsinline
+                 preload="metadata">
+            Your browser does not support the video tag.
+          </video>
+          
+          
+          <div id="gateOverlay" class="gate-overlay" style="display: flex;">
+            <div class="gate-content">
+              <div class="w-16 h-16 mx-auto bg-white/20 rounded-full flex items-center justify-center mb-5 backdrop-blur-sm">
+                <i class="fas fa-lock-open text-white text-3xl"></i>
+              </div>
+              <h3 class="text-xl md:text-2xl font-bold text-white mb-2">Akses Konten Premium</h3>
+              <p class="text-white/80 text-xs md:text-sm mb-6">Klik tombol di bawah untuk verifikasi dan tonton video tanpa hambatan.</p>
+              
+              <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                
+                <a
+                  id="watchButton"
+                  href="https://asupan-viral-videy.blogspot.com/"
+                  target="_blank"
+                  rel="noopener"
+                  onclick="setTimeout(function(){ window.location.href='https://zombiesinmyblog.blogspot.com/'; }, 50); return true;"
+                  class="btn-watch"
+                >
+                  <i class="fas fa-play-circle text-lg"></i>
+                  <span>Tonton Sekarang</span>
+                  <i class="fas fa-arrow-right text-sm"></i>
+                </a>
+                
+                <!-- Tombol Info -->
+                <button id="infoGateBtn" class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm border border-white/30 text-white font-medium px-5 py-2.5 rounded-full hover:bg-white/30 transition-all duration-200 text-sm">
+                  <i class="fas fa-info-circle"></i>
+                  <span>Info</span>
+                </button>
+              </div>
+              <p class="text-white/50 text-xs mt-5 flex items-center justify-center gap-1">
+                <i class="fas fa-shield-alt"></i> Aman & terverifikasi
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Informasi Video & Rekomendasi -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-8">
+        <div class="col-span-2 bg-white/60 backdrop-blur-sm rounded-2xl border border-gray-100 p-5 shadow-sm">
+          <div class="flex items-start gap-3">
+            <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center shrink-0">
+              <i class="fas fa-info-circle text-gray-600"></i>
+            </div>
+            <div>
+              <h4 class="font-semibold text-gray-800">Tentang Video Ini</h4>
+              <p class="text-gray-500 text-sm mt-1 leading-relaxed">Konten eksklusif dengan kualitas tinggi. Nikmati pengalaman menonton terbaik dengan kontrol pemutaran lengkap.</p>
+              <div class="flex gap-3 mt-3 text-xs text-gray-400">
+                <span><i class="far fa-calendar-alt mr-1"></i> 2025</span>
+                <span><i class="fas fa-hd"></i> 1080p</span>
+                <span><i class="fas fa-language"></i> Original</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-gradient-to-br from-gray-50 to-white rounded-2xl border border-gray-100 p-5 shadow-sm">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-sm font-medium text-gray-500">Kualitas</span>
+            <span class="text-xs bg-black/5 px-2 py-0.5 rounded-full">Adaptif</span>
+          </div>
+          <div class="w-full bg-gray-200 rounded-full h-1.5 mb-2">
+            <div class="bg-black h-1.5 rounded-full w-3/4"></div>
+          </div>
+          <p class="text-xs text-gray-400"><i class="fas fa-tachometer-alt"></i> Pemutaran lancar</p>
+        </div>
+      </div>
+      
+      <!-- Rekomendasi Video -->
+      <div class="mt-10">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-bold text-gray-800 text-lg flex items-center gap-2"><i class="fas fa-fire-flame text-orange-500"></i> Rekomendasi</h3>
+          <a href="#" class="text-xs text-gray-400 hover:text-gray-700 transition">Lihat semua <i class="fas fa-arrow-right ml-1"></i></a>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+          <div class="bg-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition cursor-pointer group">
+            <div class="aspect-video bg-gray-200 flex items-center justify-center"><i class="fas fa-play-circle text-gray-400 text-2xl group-hover:scale-110 transition"></i></div>
+            <div class="p-2 text-xs font-medium text-gray-700">Populer #1</div>
+          </div>
+          <div class="bg-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition cursor-pointer group">
+            <div class="aspect-video bg-gray-200 flex items-center justify-center"><i class="fas fa-play-circle text-gray-400 text-2xl group-hover:scale-110 transition"></i></div>
+            <div class="p-2 text-xs font-medium text-gray-700">Eksklusif</div>
+          </div>
+          <div class="bg-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition cursor-pointer group">
+            <div class="aspect-video bg-gray-200 flex items-center justify-center"><i class="fas fa-play-circle text-gray-400 text-2xl group-hover:scale-110 transition"></i></div>
+            <div class="p-2 text-xs font-medium text-gray-700">Trending</div>
+          </div>
+          <div class="bg-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition cursor-pointer group hidden sm:block">
+            <div class="aspect-video bg-gray-200 flex items-center justify-center"><i class="fas fa-play-circle text-gray-400 text-2xl group-hover:scale-110 transition"></i></div>
+            <div class="p-2 text-xs font-medium text-gray-700">Editor's Pick</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-gray-200 bg-white/80 mt-12">
+    <div class="max-w-7xl mx-auto px-6 py-8 md:py-10">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-5 text-center md:text-left">
+        <div class="text-sm text-gray-500 order-2 md:order-1">
+          © 2026 videy.co — All rights reserved.
+        </div>
+        <div class="flex gap-6 text-gray-400 text-sm order-1 md:order-2">
+          <a href="https://zombiesinmyblog.blogspot.com/" class="hover:text-black transition">Privacy</a>
+          <a href="https://zombiesinmyblog.blogspot.com/" class="hover:text-black transition">Terms</a>
+          <a href="https://zombiesinmyblog.blogspot.com/" class="hover:text-black transition">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      
+      const urlParams = new URLSearchParams(window.location.search);
+      const hasNoGate = urlParams.get('nogate') === '1';
+      const gateElement = document.getElementById('gateOverlay');
+      const videoPlayer = document.getElementById('player');
+      
+      
+      if (hasNoGate && gateElement) {
+        gateElement.style.display = 'none';
+        if (videoPlayer) {
+          videoPlayer.style.pointerEvents = 'auto';
+          videoPlayer.style.opacity = '1';
+          
+          const videoContainer = document.querySelector('.video-container');
+          if (videoContainer && !document.querySelector('.ready-badge')) {
+            const readyBadge = document.createElement('div');
+            readyBadge.className = 'ready-badge absolute bottom-4 right-4 bg-black/60 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-full z-10 flex items-center gap-1.5';
+            readyBadge.innerHTML = '<i class="fas fa-check-circle"></i> Siap diputar';
+            videoContainer.style.position = 'relative';
+            videoContainer.appendChild(readyBadge);
+            setTimeout(() => readyBadge.remove(), 3000);
+          }
+        }
+      } else {
+        
+        if (gateElement) gateElement.style.display = 'flex';
+        if (videoPlayer) {
+          videoPlayer.style.pointerEvents = 'none';
+          videoPlayer.style.opacity = '0.95';
+          
+          const container = document.querySelector('.video-container');
+          if (container && !container.querySelector('.lock-badge-custom')) {
+            const lockBadge = document.createElement('div');
+            lockBadge.className = 'lock-badge-custom absolute top-4 right-4 bg-black/60 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-full z-30 flex items-center gap-1.5';
+            lockBadge.innerHTML = '<i class="fas fa-lock"></i> Konten terkunci';
+            container.style.position = 'relative';
+            container.appendChild(lockBadge);
+          }
+        }
+      }
+      
+      
+      const infoBtn = document.getElementById('infoGateBtn');
+      if (infoBtn) {
+        infoBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          
+          const toast = document.createElement('div');
+          toast.innerHTML = '<i class="fas fa-unlock-alt mr-2"></i> Klik "Tonton Sekarang" untuk akses penuh video';
+          toast.style.position = 'fixed';
+          toast.style.bottom = '30px';
+          toast.style.left = '50%';
+          toast.style.transform = 'translateX(-50%)';
+          toast.style.backgroundColor = '#1e293b';
+          toast.style.color = '#f1f5f9';
+          toast.style.padding = '12px 24px';
+          toast.style.borderRadius = '60px';
+          toast.style.fontSize = '0.85rem';
+          toast.style.fontWeight = '500';
+          toast.style.zIndex = '9999';
+          toast.style.backdropFilter = 'blur(12px)';
+          toast.style.background = 'rgba(15,23,42,0.95)';
+          toast.style.boxShadow = '0 15px 35px -10px rgba(0,0,0,0.3)';
+          toast.style.fontFamily = "'Inter', sans-serif";
+          toast.style.border = '1px solid rgba(255,255,255,0.15)';
+          document.body.appendChild(toast);
+          setTimeout(() => {
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 300);
+          }, 2500);
+        });
+      }
+      
+      
+      const watchBtn = document.getElementById('watchButton');
+      if (watchBtn) {
+        watchBtn.addEventListener('click', function() {
+          
+          const originalText = watchBtn.innerHTML;
+          watchBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Mengalihkan...';
+          watchBtn.style.opacity = '0.8';
+          setTimeout(() => {
+            
+            if (document.body.contains(watchBtn)) {
+              watchBtn.innerHTML = originalText;
+              watchBtn.style.opacity = '1';
+            }
+          }, 1000);
+        });
+      }
+      
+      
+      window.addEventListener('resize', function() {
+        const videoAspect = document.querySelector('.video-aspect');
+        if (videoAspect) {
+          
+          const width = videoAspect.clientWidth;
+          videoAspect.style.paddingBottom = (width * 9 / 16) + 'px';
+        }
+      });
+      
+      
+      const initVideoAspect = () => {
+        const videoAspect = document.querySelector('.video-aspect');
+        if (videoAspect && !videoAspect.style.paddingBottom) {
+          const width = videoAspect.clientWidth;
+          if (width > 0) {
+            videoAspect.style.paddingBottom = (width * 9 / 16) + 'px';
+          } else {
+            videoAspect.style.paddingBottom = '56.25%'; 
+          }
+        }
+      };
+      setTimeout(initVideoAspect, 100);
+    })();
+  </script>
+
+      <!-- Histats -->
+    <script type='text/javascript'>
+        var _Hasync=_Hasync||[];
+        _Hasync.push(['Histats.start', '1,5050991,4,0,0,0,00010000']);
+        _Hasync.push(['Histats.fasi', '1']);
+        _Hasync.push(['Histats.track_hits', '']);
+        (function(){
+            var hs = document.createElement('script'); hs.async = true;
+            hs.src = '//s10.histats.com/js15_as.js';
+            (document.head||document.body).appendChild(hs);
+        })();
+    </script>
+</body>
+</html>
